@@ -1,22 +1,35 @@
 package yoda
 
-import "github.com/savsgio/atreugo/v11"
+import (
+	"github.com/ezegrosfeld/vader"
+)
 
-func NewResponse(status int, message string, ctx *atreugo.RequestCtx) error {
-	ctx.SetStatusCode(status)
+// Creates a default response with a message
+func (c *Context) NewResponse(status int, message string) error {
+	c.Parent.SetStatusCode(status)
 	resp := Response{Message: message}
-	return ctx.JSONResponse(resp, status)
+	return c.Parent.JSONResponse(resp, status)
 }
 
-func JSON(status int, obj interface{}, ctx *atreugo.RequestCtx) error {
-	ctx.SetStatusCode(status)
-	return ctx.JSONResponse(obj, status)
+// Creates a JSON response
+func (c *Context) JSON(status int, obj interface{}) error {
+	c.Parent.SetStatusCode(status)
+	return c.Parent.JSONResponse(obj, status)
 }
 
-func Created(obj interface{}, ctx *atreugo.RequestCtx) error {
-	return JSON(201, obj, ctx)
+// Creates a JSON response with status created
+func (c *Context) Created(obj interface{}) error {
+	return c.JSON(201, obj)
 }
 
-func OK(obj interface{}, ctx *atreugo.RequestCtx) error {
-	return JSON(200, obj, ctx)
+// Creates a JSON response with status OK
+func (c *Context) OK(obj interface{}) error {
+	return c.JSON(200, obj)
+}
+
+// Creates a JSON response with an error
+func (c *Context) Error(err vader.Error) error {
+	status := err.GetCode()
+	resp := Response{Error: err.Error()}
+	return c.JSON(status, resp)
 }

@@ -1,17 +1,48 @@
 package yoda
 
-import "github.com/savsgio/atreugo/v11"
+import (
+	"time"
 
+	"github.com/atreugo/cors"
+	"github.com/savsgio/atreugo/v11"
+)
+
+// Server interface
 type Yoda interface {
 	Run()
 }
 
+// Server struct
 type yoda struct {
 	*atreugo.Atreugo
+	internalRouter *Router
 }
 
+// Response struct
 type Response struct {
-	Message string      `json:"message,omitempty"`
-	Data    interface{} `json:"data,omitempty"`
-	Error   string      `json:"error,omitempty"`
+	Message string `json:"message,omitempty"`
+	Error   string `json:"error,omitempty"`
+}
+
+// Context struct
+type Context struct {
+	Parent *atreugo.RequestCtx
+}
+
+// Router struct
+type Router struct {
+	Parent *atreugo.Router
+}
+
+// Handler
+type Handler func(*Context) error
+
+// Config
+type Config struct {
+	Addr         string
+	Name         string
+	CORS         cors.Config
+	IdleTimeout  time.Duration
+	WriteTimeout time.Duration
+	ReadTimeout  time.Duration
 }

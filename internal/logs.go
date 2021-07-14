@@ -28,16 +28,13 @@ func LogResponse(ctx *atreugo.RequestCtx) {
 
 	ip := ctx.LocalIP()
 
-	method := ctx.Method()
-
-	methodColor := strings.Replace(getMethodColor(string(method)), "4", "3", 1)
-
 	info := ctx.UserValue("info").(HandlerInfo)
+
+	methodColor := strings.Replace(getMethodColor(string(info.method)), "4", "3", 1)
+
 	timeHandler := (time.Now().UnixNano() - info.tsStart) / (int64(time.Millisecond) / int64(time.Nanosecond))
 
-	path := ctx.URI().Path()
-
-	fmt.Printf("%s%s%s %s [%s %3d %s] => %s | %d ms | %s\n", methodColor, method, reset, path, color, status, reset, date, timeHandler, ip)
+	fmt.Printf("%s%s%s %s [%s %3d %s] => %s | %d ms | %s\n", methodColor, info.method, reset, info.path, color, status, reset, date, timeHandler, ip)
 }
 
 func getResponseColor(status int) string {

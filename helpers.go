@@ -2,14 +2,14 @@ package yoda
 
 import (
 	"encoding/json"
-
-	"github.com/savsgio/atreugo/v11"
 )
 
-func Bind(i interface{}, ctx *atreugo.RequestCtx) error {
-	return json.Unmarshal(ctx.PostBody(), i)
+// Binds a json into a struct
+func (c *Context) Bind(i interface{}) error {
+	return json.Unmarshal(c.Parent.PostBody(), i)
 }
 
-func BindFromContext(key string, ctx *atreugo.RequestCtx) interface{} {
-	return ctx.UserValue(key)
+// Returns a value from a context using the key
+func (c *Context) FromContext(key string) interface{} {
+	return c.Parent.UserValue(key)
 }
