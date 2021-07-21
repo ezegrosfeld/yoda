@@ -6,17 +6,14 @@ import (
 	"github.com/savsgio/atreugo/v11"
 )
 
-const (
-	uvKey       = "request.startTime"
-	millisecond = float64(time.Millisecond)
-)
-
+// HandlerInfo struct
 type HandlerInfo struct {
 	method  []byte
 	path    []byte
 	tsStart int64
 }
 
+// BeforeMiddleware is part of the logging middleware
 func BeforeMiddleware() atreugo.Middleware {
 	return func(ctx *atreugo.RequestCtx) error {
 		ctx.SetUserValue("info", HandlerInfo{
@@ -28,6 +25,7 @@ func BeforeMiddleware() atreugo.Middleware {
 	}
 }
 
+// AfterMiddleware is part of the logging middleware
 func AfterMiddleware() atreugo.Middleware {
 	return func(ctx *atreugo.RequestCtx) error {
 		LogResponse(ctx)

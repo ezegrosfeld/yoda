@@ -7,7 +7,7 @@ import (
 	"github.com/savsgio/atreugo/v11"
 )
 
-// Server interface
+// Yoda is the server interface
 type Yoda interface {
 	Run()
 }
@@ -35,10 +35,10 @@ type Router struct {
 	Parent *atreugo.Router
 }
 
-// Handler
+// Handler struct
 type Handler func(*Context) error
 
-// Config
+// Config struct
 type Config struct {
 	Addr         string
 	Name         string

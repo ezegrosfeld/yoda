@@ -6,7 +6,7 @@ import (
 	"github.com/savsgio/atreugo/v11"
 )
 
-// Creates a new standard yoda server
+// NewServer creates a new standard yoda server
 func NewServer(config Config) *yoda {
 	server := atreugo.New(atreugo.Config{
 		Name:         config.Name,
@@ -28,7 +28,7 @@ func NewServer(config Config) *yoda {
 	return &yoda{server, ir}
 }
 
-//Creates a yoda server with config
+//NewServerWithConfig creates a yoda server with config
 func NewServerWithConfig(config atreugo.Config) *yoda {
 	server := atreugo.New(config)
 
@@ -40,14 +40,14 @@ func NewServerWithConfig(config atreugo.Config) *yoda {
 	return &yoda{server, ir}
 }
 
-// Starts the yoda server
+// Start starts the yoda server
 func (y *yoda) Start() {
 	if err := y.ListenAndServe(); err != nil {
 		panic(err)
 	}
 }
 
-// Creates a group
+// Group creates a group
 func (y *yoda) Group(path string, fns ...Handler) *Router {
 	r := y.NewGroupPath(path)
 	router := &Router{r}

@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 
+	"github.com/ezegrosfeld/vader"
 	"github.com/go-playground/validator"
 )
 
@@ -19,37 +20,40 @@ func handleValidatorError(errors validator.ValidationErrors) string {
 	return text
 }
 
-// Binds a json into a struct
-func (c *Context) Bind(i interface{}) error {
+// Bind binds a json into a struct
+func (c *Context) Bind(i interface{}) vader.Error {
 	jsonerr := json.Unmarshal(c.Parent.PostBody(), i)
 	if jsonerr != nil {
-		return fmt.Errorf(jsonerr.Error())
+		return vader.BadRequest(jsonerr.Error())
 	}
 	validate := validator.New()
 	err := validate.Struct(i).(validator.ValidationErrors)
 	if err != nil {
 		fmt.Println(handleValidatorError(err))
-		return fmt.Errorf(handleValidatorError(err))
+		return vader.BadRequest(handleValidatorError(err))
 	}
 	return nil
 }
 
-// Binds a json with custom validaroe
-func (c *Context) BindWithValidator(i interface{}, key string, fn validator.Func) error {
+// BindWithValidator binds a json with custom validaroe
+func (c *Context) BindWithValidator(i interface{}, key string, fn validator.Func) vader.Error {
 	jsonerr := json.Unmarshal(c.Parent.PostBody(), i)
 	if jsonerr != nil {
-		return fmt.Errorf(jsonerr.Error())
+		return vader.BadRequest(jsonerr.Error())
 	}
 	validate := validator.New()
-	validate.RegisterValidation(key, fn)
+	verr := validate.RegisterValidation(key, fn)
+	if verr != nil {
+		return vader.InternalError(verr.Error())
+	}
 	err := validate.Struct(i).(validator.ValidationErrors)
 	if err != nil {
-		return fmt.Errorf(handleValidatorError(err))
+		return vader.BadRequest(handleValidatorError(err))
 	}
 	return nil
 }
 
-// Returns a value from a context using the key
+// FromContext returns a value from a context using the key
 func (c *Context) FromContext(key string) interface{} {
 	return c.Parent.UserValue(key)
 }

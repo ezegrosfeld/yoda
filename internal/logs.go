@@ -19,6 +19,7 @@ const (
 	reset   = "\033[0m"
 )
 
+// LogResponse creates a coloured log of the response
 func LogResponse(ctx *atreugo.RequestCtx) {
 	status := ctx.Response.StatusCode()
 	color := getResponseColor(status)
