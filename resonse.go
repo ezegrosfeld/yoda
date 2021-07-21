@@ -22,5 +22,5 @@ func (c *Context) JSON(status int, obj interface{}) error {
 func (c *Context) Error(err vader.Error) error {
 	status := err.GetCode()
 	resp := Response{Error: err.Error()}
-	return c.JSON(status, resp)
+	return c.Parent.JSONResponse(resp, status)
 }
