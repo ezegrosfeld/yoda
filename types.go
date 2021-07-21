@@ -20,8 +20,9 @@ type yoda struct {
 
 // Response struct
 type Response struct {
-	Message string `json:"message,omitempty"`
-	Error   string `json:"error,omitempty"`
+	Message string      `json:"message,omitempty"`
+	Error   string      `json:"error,omitempty"`
+	Data    interface{} `json:"data,omitempty"`
 }
 
 // Context struct
