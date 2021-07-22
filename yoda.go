@@ -41,10 +41,8 @@ func NewServerWithConfig(config atreugo.Config) *yoda {
 }
 
 // Start starts the yoda server
-func (y *yoda) Start() {
-	if err := y.ListenAndServe(); err != nil {
-		panic(err)
-	}
+func (y *yoda) Start() error {
+	return y.ListenAndServe()
 }
 
 // Group creates a group
