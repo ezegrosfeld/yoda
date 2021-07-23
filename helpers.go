@@ -31,8 +31,7 @@ func (c *Context) Bind(i interface{}) vader.Error {
 		return nil
 	}
 	err := validate.Struct(i).(validator.ValidationErrors)
-	fmt.Println(handleValidatorError(err))
-	return vader.BadRequest(handleValidatorError(err))
+	return vader.UnprocessableEntity(handleValidatorError(err))
 }
 
 // BindWithValidator binds a json with custom validaroe
@@ -44,14 +43,13 @@ func (c *Context) BindWithValidator(i interface{}, key string, fn validator.Func
 	validate := validator.New()
 	verr := validate.RegisterValidation(key, fn)
 	if verr != nil {
-		return vader.InternalError(verr.Error())
+		return vader.Internal(verr.Error())
 	}
 	if validate.Struct(i) == nil {
 		return nil
 	}
 	err := validate.Struct(i).(validator.ValidationErrors)
-	fmt.Println(handleValidatorError(err))
-	return vader.BadRequest(handleValidatorError(err))
+	return vader.UnprocessableEntity(handleValidatorError(err))
 }
 
 // FromContext returns a value from a context using the key

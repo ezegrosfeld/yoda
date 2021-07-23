@@ -9,6 +9,8 @@ github.com/davecgh/go-spew v1.1.0 h1:ZDRjVQ15GmhC3fiQ8ni8+OwkZQO4DARzQgrnXU1Liz8
 github.com/davecgh/go-spew v1.1.0/go.mod h1:J7Y8YcW2NihsgmVo/mv3lAwl/skON4iLHjSsI+c5H38=
 github.com/ezegrosfeld/vader v0.1.0 h1:zxBzbf0L3SYrRZGOQUMj9mSwD/psV5R6+KxE6wLz+m0=
 github.com/ezegrosfeld/vader v0.1.0/go.mod h1:M5uLmBklFDK8aUwMn8Ij9SuPiRaGPWxpWSiQ9djvGaY=
+github.com/ezegrosfeld/vader v0.1.2 h1:Z86XrWhdvosvAF42zW0QyBGP026SricjUKRNqxk0bME=
+github.com/ezegrosfeld/vader v0.1.2/go.mod h1:M5uLmBklFDK8aUwMn8Ij9SuPiRaGPWxpWSiQ9djvGaY=
 github.com/fasthttp/router v1.3.12/go.mod h1:u+cTxz7conAkhUqSYx0em5kfYwDaslNehUyES/MTydU=
 github.com/fasthttp/router v1.4.0 h1:sWMk0q7M6Qj73eLIolh/934mKTNZIWDrEPDhZUF1pAg=
 github.com/fasthttp/router v1.4.0/go.mod h1:uTM3xaLINfEk/uqId8rv8tzwr47+HZuxopzUWfwD4qg=
