@@ -7,13 +7,8 @@ import (
 	"github.com/savsgio/atreugo/v11"
 )
 
-// Yoda is the server interface
-type Yoda interface {
-	Run()
-}
-
 // Server struct
-type yoda struct {
+type Yoda struct {
 	*atreugo.Atreugo
 	internalRouter *Router
 }

@@ -7,7 +7,7 @@ import (
 )
 
 // NewServer creates a new standard yoda server
-func NewServer(config Config) *yoda {
+func NewServer(config Config) *Yoda {
 	server := atreugo.New(atreugo.Config{
 		Name:         config.Name,
 		Addr:         config.Addr,
@@ -25,11 +25,11 @@ func NewServer(config Config) *yoda {
 
 	ir := &Router{server.Router}
 
-	return &yoda{server, ir}
+	return &Yoda{server, ir}
 }
 
 //NewServerWithConfig creates a yoda server with config
-func NewServerWithConfig(config atreugo.Config) *yoda {
+func NewServerWithConfig(config atreugo.Config) *Yoda {
 	server := atreugo.New(config)
 
 	server.UseBefore(internal.BeforeMiddleware())
@@ -37,16 +37,16 @@ func NewServerWithConfig(config atreugo.Config) *yoda {
 
 	ir := &Router{server.Router}
 
-	return &yoda{server, ir}
+	return &Yoda{server, ir}
 }
 
 // Start starts the yoda server
-func (y *yoda) Start() error {
+func (y *Yoda) Start() error {
 	return y.ListenAndServe()
 }
 
 // Group creates a group
-func (y *yoda) Group(path string, fns ...Handler) *Router {
+func (y *Yoda) Group(path string, fns ...Handler) *Router {
 	r := y.NewGroupPath(path)
 	router := &Router{r}
 	router.Use(fns...)
