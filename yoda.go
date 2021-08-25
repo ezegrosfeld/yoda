@@ -1,6 +1,8 @@
 package yoda
 
 import (
+	"os"
+
 	"github.com/atreugo/cors"
 	"github.com/ezegrosfeld/yoda/internal"
 	"github.com/savsgio/atreugo/v11"
@@ -14,6 +16,7 @@ func NewServer(config Config) *Yoda {
 		IdleTimeout:  config.IdleTimeout,
 		ReadTimeout:  config.ReadTimeout,
 		WriteTimeout: config.WriteTimeout,
+		LogAllErrors: os.Getenv("ENVIRONMENT") != "production",
 	})
 
 	corsConfig := config.CORS
