@@ -2,6 +2,7 @@ package internal
 
 import (
 	"fmt"
+	"os"
 	"strings"
 	"time"
 
@@ -21,6 +22,10 @@ const (
 
 // LogResponse creates a coloured log of the response
 func LogResponse(ctx *atreugo.RequestCtx) {
+	env := os.Getenv("ENVIRONMENT")
+	if env == "production" {
+		return
+	}
 	status := ctx.Response.StatusCode()
 	color := getResponseColor(status)
 
